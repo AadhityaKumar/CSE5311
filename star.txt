@@ -1,0 +1,98 @@
+start with program;
+
+program     	::= block_content:b															
+            	;
+block_content   ::= defs:dl stmts:sl														
+				|	stmts:sl																
+            	;
+def        		::= VAR ID:n EQUAL expr:e													
+                |   VAR ID:n COLON type:t EQUAL expr:e										
+                |   TYPE ID:n EQUAL type:t												
+                |	DEF ID:n LP type_binds:l RP COLON type:t LB block_content:b RB			
+				|	DEF ID:n LP type_binds:l RP LB block_content:b RB						
+				|	DEF ID:n LP RP LB block_content:b RB									
+				|	DEF ID:n LP RP COLON type:t LB block_content:b RB						
+            	;
+type           ::=  INT																		
+                |   FLOAT																	
+                |   STRING																	
+                |   BOOLEAN																	
+                |   ID:n																	
+                |   ARRAY LSB type:t RSB													
+                |   LB type_binds:l RB														
+                |   LP typerr_binds:rr RP													
+                |   LP RP																	
+                ;
+lvalue          ::= ID:n																	
+                |   expr:e1 LSB expr:e2 RSB													
+                |   expr:e DOT ID:n															
+                |   expr:e SHARP INTEGER_LITERAL:n										
+                ;
+expr        	::= INTEGER_LITERAL:n														
+                |   FLOAT_LITERAL:n															
+                |   STRING_LITERAL:s														
+				|	TRUE																
+				|	FALSE																
+				|	lvalue:l															
+                |   MINUS expr:e															
+				|	NOT expr:e1																
+				|   expr:e1 EQ expr:e2														
+				|   expr:e1 LT expr:e2														
+				|   expr:e1 GT expr:e2														
+				|   expr:e1 LEQ expr:e2														
+				|   expr:e1 NEQ expr:e2														
+				|   expr:e1 GEQ expr:e2														
+				|   expr:e1 PLUS expr:e2													
+				|   expr:e1 MINUS expr:e2													
+				|   expr:e1 TIMES expr:e2													
+				|   expr:e1 DIV expr:e2														
+				|   expr:e1 OR expr:e2														
+				|   expr:e1 AND expr:e2														
+				|	expr:e1 MOD expr:e2														
+				|	ARRAY LP expr:e1 COMMA expr:e2 RP										
+				|	ID:n LP func_binds:fb RP												
+				|	ID:n LP RP																
+				|	LB funf_binds:ff RB														
+				|	LP func_binds:fb RP														
+				|	LP RP																	
+				|	LSB func_binds:fb RSB													
+            	;
+stmt        	::= WHILE LP expr:e RP stmt:s												
+				|	lvalue:lv EQUAL expr:e													
+				|	ID:n LP func_binds:fb RP												
+				|	ID:n LP RP																
+				|	LB defs:dl stmts:sl RB														
+				|	LB stmts:sl RB																
+				|	READ LP lvalue_binds:lb RP												
+				|	PRINT LP func_binds:fb RP												
+				|	PRINT LP RP																
+				|	IF LP expr:e RP stmt:s1													
+				|	IF LP expr:e RP stmt:s1 ELSE stmt:s2									
+				|	FOR LP ID:n EQUAL expr:e1 TO expr:e2 BY expr:e3 RP stmt:s				
+				|	FOR LP ID:n EQUAL expr:e1 TO expr:e2 RP stmt:s							
+				|	LOOP stmt:s																
+				|	EXIT																	
+				|	RETURN expr:e															
+				|	RETURN																	
+            	;
+stmts       	::= stmts:sl stmt:s SEMI													
+            	|   stmt:s SEMI																
+            	;
+defs			::= defs:dl def:d SEMI														
+				|	def:d SEMI																
+				;
+type_binds		::= ID:n COLON type:t														
+				|	type_binds:l COMMA ID:n COLON type:t									
+				;
+func_binds		::= expr:e																	
+				|	func_binds:fb COMMA expr:e												
+				;
+funf_binds		::= lvalue:l EQUAL expr:e														
+				|	funf_binds:ff COMMA ID:n EQUAL expr:e									
+				;
+lvalue_binds	::= lvalue:l																
+				|	lvalue_binds:lb COMMA lvalue:l											
+				;
+typerr_binds	::= type:t																	
+				|	typerr_binds:l COMMA type:t												
+				;
