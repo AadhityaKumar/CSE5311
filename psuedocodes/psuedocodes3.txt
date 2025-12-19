@@ -1,0 +1,78 @@
+DFS(G):
+    for u in G.vertices:
+        u.color = white
+        u.predecesor = null
+    time = 0
+    for u in G.vertices:
+        if u.color == white:
+            DFSvisit(u)
+
+DFSvisit(u):
+    u.color = grey
+    time = time + 1
+    u.distance = time
+    for v in u.adjacentVertices:
+        if v.color == white:
+            v.predecesor = u
+            DFSvisit(v)
+    color.u = black
+    time = time + 1
+    u.finish = time
+
+BFS(G,s)
+    for u in G.vertices - s:
+        u.color = white
+        u.distance = infinity
+        u.predecesor = null
+    s.color = grey
+    s.distance = 0
+    s.predecesor = null
+    Q = emptySet
+    enqueue(Q, s)
+    while Q != emptySet:
+        u = dequeue(Q)
+        for v in u.adjacentVertices:
+            if v.color == white:
+                v.color = grey
+                v.distance = u.distance + 1
+                v.predecesor = u
+                enqueue(Q, v)
+        u.color = black
+
+Huffman(c):
+    n = len(C)
+    Q = C
+    for i = 1 to n-1:
+        node z
+        x = extractMin(Q)
+        y = extractMin(Q)
+        z.left = x
+        z.right = y
+        z.frequency = x.frequency + y.frequency
+        Insert(Q, z)
+    return extractMax(Q)
+
+GreedyFractionalKnapsack(W, n):
+    sortDescendingOrder(n)
+    totalValue = 0
+    remainingCapacity = W
+    for i = 1 to n:
+        if remainingCapacity == 0:
+            return totalValue
+        weightAdded = min(remainingCapacity, i.weight)
+        totalValue = totalValue + weightAdded * (i.value/i.weight)
+        remainingCapacity = remainingCapacity - weightAdded
+    return totalValue
+
+Prims(G)
+    Q = G.vertices
+    for u in Q:
+        u.key = infinity
+    root.key = 0
+    root.predecesor = null
+    while Q != empty:
+        u = extractMin(Q)
+        for v in u.adjacentVertices:
+            if v in Q and edge(u, v) < v.key:
+                v.predecesor = u
+                v.key = edge(u, v)
