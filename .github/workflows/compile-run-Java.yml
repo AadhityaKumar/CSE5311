@@ -25,6 +25,6 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: compile
-      run: javac insertionsort.java
+      run: javac quicksort.java
     - name: run
-      run: java insertionsort
+      run: java quicksort
