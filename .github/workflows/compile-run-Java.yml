@@ -22,6 +22,6 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: compile
-      run: javac insertionsort.java
+      run: javac Final_code/Project1/insertionsort.java
     - name: run
-      run: java insertionsort
+      run: java Final_code/Project1/insertionsort
