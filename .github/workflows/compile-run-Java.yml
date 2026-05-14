@@ -24,4 +24,4 @@ jobs:
     - name: compile
       run: javac Final_code/Project1/insertionsort.java
     - name: run
-      run: java Final_code/Project1/insertionsort
+      run: java insertionsort
