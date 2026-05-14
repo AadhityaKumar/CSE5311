@@ -27,4 +27,4 @@ jobs:
     - name: compile
       run: javac quicksort.java
     - name: run
-      run: java quicksort
+      run: java quicksort arr40.csv
