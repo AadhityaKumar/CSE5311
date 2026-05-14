@@ -27,4 +27,9 @@ jobs:
     - name: compile
       run: javac quicksort.java
     - name: run
-      run: java quicksort arr40.csv
+      run: java quicksort arr40.csv sorted.csv
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: my-artifact-name
+        path: sorted.csv
