@@ -35,9 +35,7 @@ jobs:
         path: Final_code/Project1/sorted.csv
   deploy:
     runs-on: self-hosted
-    defaults:
-      run:
-        working-directory: Final_code/Project1
+    needs: [build]
     steps:
     - name: Download build artifact
       uses: actions/download-artifact@v4
