@@ -34,7 +34,7 @@ jobs:
         name: sorted.csv
         path: Final_code/Project1/sorted.csv
   deploy:
-    runs-on: LAPTOP-I73C2NHS
+    runs-on: self-hosted
     steps:
     - name: Download build artifact
       uses: actions/download-artifact@v4
