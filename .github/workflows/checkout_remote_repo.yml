@@ -19,4 +19,4 @@ jobs:
           repository: dillhoffuta/assignment-5-AadhityaKumar  # Replace with the target owner and repo
           ref: main                    # Optional: specify a branch, tag, or SHA
           token: ${{ secrets.PAT }}     # Required for private repositories
-          path: C:\AzureDevops\DeploymentTest
+          path: ./remote-repo-priv
