@@ -76,3 +76,6 @@ Prims(G)
             if v in Q and edge(u, v) < v.key:
                 v.predecesor = u
                 v.key = edge(u, v)
+
+//confirmation #: 541362
+//IP: 76.198.234.165
