@@ -1,0 +1,37 @@
+# This workflow will build a Java project with Ant
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-ant
+
+name: Java CI
+
+on:
+  #push:
+    #branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:  
+    - id: files
+      uses: jitterbit/get-changed-files@v1
+    - run: |
+        for changed_file in ${{ steps.files.outputs.all}}; do
+          cp --parents "$file" changed_files/
+        done
+        
+    - name: Upload changed files as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: pr-changed-files
+        path: changed_files/
+  deploy:
+    runs-on: self-hosted
+    needs: [build]
+    steps:
+    - name: Download build artifact
+      uses: actions/download-artifact@v4
+      with:
+        path: C:\AzureDevops\DeploymentTest
+    
