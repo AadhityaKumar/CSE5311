@@ -24,7 +24,7 @@ jobs:
     - run: |
         mkdir changed_files
         for changed_file in ${{ steps.files.outputs.all}}; do
-          cp --parents "$file" changed_files/
+          cp --parents "$changed_file" changed_files/
         done
         
     - name: Upload changed files as artifact
