@@ -17,6 +17,11 @@ jobs:
           fetch-depth: 0
           path: repo
           
+      - name: Fetch target branch
+        run: |
+          cd repo
+          git fetch origin main
+          
       - id: files2
         continue-on-error: true
         uses: jitterbit/get-changed-files@v1
