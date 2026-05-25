@@ -13,23 +13,27 @@ jobs:
         with:
           repository: AadhityaKumar/Tasks_Aadhitya_Kumar
           token: ${{ secrets.PAT }}
-          ref: refs/pull/1/merge
+          ref: refs/pull/1/head
           path: 'repo'
           fetch-depth: 0
           
-      - name: Fetch target branch
-        id: files2
-        continue-on-error: true
-        uses: jitterbit/get-changed-files@v1
-        with: 
-          format: 'json'
+      - name: Get Changed Files
+        id: files
+        run: |
+          cd repo
+          git diff --name-only origin/main HEAD > changed_files.txt
+          cat changed_files.txt
         
       - run: |
-          mkdir changed_files
+          mkdir -p changed_files
           cd repo
-          for changed_file in ${{ steps.files2.outputs.all}}; do
-            cp --parents "$changed_file" changed_files/
-          done
+          while read file; do
+            mkdir -p "../changed_files/$(dirname "$file")"
+
+            if [ -f "$file" ]; then
+              cp "$file" "../changed_files/$file"
+            fi
+          done < changed_files.txt
           
       - name: Upload changed files as artifact
         uses: actions/upload-artifact@v4
