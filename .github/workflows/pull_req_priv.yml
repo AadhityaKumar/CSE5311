@@ -18,12 +18,12 @@ jobs:
           token: ${{ secrets.PAT }}
           ref: refs/pull/${{1}}/merge
           fetch-depth: 0
-      - id: files
+      - id: files2
         continue-on-error: true
         uses: jitterbit/get-changed-files@v1
       - run: |
           mkdir changed_files
-          for changed_file in ${{ steps.files.outputs.all}}; do
+          for changed_file in ${{ steps.files2.outputs.all}}; do
             cp --parents "$changed_file" changed_files/
           done
           
