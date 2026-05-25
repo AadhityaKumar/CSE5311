@@ -1,0 +1,42 @@
+name: Java CI
+
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Final_code/Project1
+    steps:
+      - name: Checkout Remote Repository
+        uses: actions/checkout@v4
+        with:
+          repository: AadhityaKumar/Tasks_Aadhitya_Kumar
+          token: ${{ secrets.PAT }}
+          ref: refs/pull/${{1}}/merge
+          fetch-depth: 0
+      - id: files
+        continue-on-error: true
+        uses: jitterbit/get-changed-files@v1
+      - run: |
+          mkdir changed_files
+          for changed_file in ${{ steps.files.outputs.all}}; do
+            cp --parents "$changed_file" changed_files/
+          done
+          
+      - name: Upload changed files as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-changed-files
+          path: changed_files/
+  deploy:
+    runs-on: self-hosted
+    needs: [build]
+    steps:
+    - name: Download build artifact
+      uses: actions/download-artifact@v4
+      with:
+        path: C:\AzureDevops\DeploymentTest
