@@ -14,7 +14,7 @@ jobs:
           repository: AadhityaKumar/Tasks_Aadhitya_Kumar
           token: ${{ secrets.PAT }}
           ref: refs/pull/1/merge
-          path: 'ext-repo'
+          path: 'repo'
           fetch-depth: 0
           
       - name: Fetch target branch
@@ -22,11 +22,6 @@ jobs:
         continue-on-error: true
         uses: jitterbit/get-changed-files@v1
         with: 
-          repository: AadhityaKumar/Tasks_Aadhitya_Kumar
-          token: ${{ secrets.PAT }}
-          ref: refs/pull/1/merge
-          path: 'repo'
-          fetch-depth: 0
           format: 'json'
         
       - run: |
