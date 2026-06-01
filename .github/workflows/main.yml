@@ -1,0 +1,17 @@
+name: download MSI
+
+on:
+  workflow_dispatch
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Run multiple CMD commands
+        shell: cmd
+        run: |
+          conda activate my-env
+          cd .vscode/Azure
+          python cache.py
+      - name: Open Webpage on Windows Runner
+        run: Start-Process "https://youtube.com"
+        shell: powershell
