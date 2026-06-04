@@ -21,6 +21,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT }}
         run: |
+          cd repo
           gh pr view 1 \
             --repo AadhityaKumar/Tasks_Aadhitya_Kumar \
             --json files \
