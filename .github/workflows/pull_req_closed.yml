@@ -18,12 +18,14 @@ jobs:
           fetch-depth: 0
 
       - name: Fetch PR Changed Files
-        id: pr_files
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT }}
         run: |
-          FILES=$(gh pr view 1 --json files --jq '.files[].path')
-          file_list=$(echo $FILES | tr '\n' ' ') > changed_files.txt
+          gh pr view 1 \
+            --repo AadhityaKumar/Tasks_Aadhitya_Kumar \
+            --json files \
+            --jq '.files[].path' > changed_files.txt
+      
           cat changed_files.txt
           
       - run: |
