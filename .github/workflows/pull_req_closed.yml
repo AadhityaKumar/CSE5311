@@ -1,0 +1,52 @@
+name: Changed Files Closed
+
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Remote Repository
+        uses: actions/checkout@v4
+        with:
+          repository: AadhityaKumar/Tasks_Aadhitya_Kumar
+          token: ${{ secrets.PAT }}
+          ref: refs/pull/1/head
+          path: 'repo'
+          fetch-depth: 0
+
+      - name: Fetch PR Changed Files
+        id: pr_files
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          FILES=$(gh pr view 1 --json files --jq '.files[].path')
+          file_list=$(echo $FILES | tr '\n' ' ') > changed_files.txt
+          cat changed_files.txt
+          
+      - run: |
+          mkdir -p changed_files
+          cd repo
+          while read file; do
+            mkdir -p "../changed_files/$(dirname "$file")"
+
+            if [ -f "$file" ]; then
+              cp "$file" "../changed_files/$file"
+            fi
+          done < changed_files.txt
+          
+      - name: Upload changed files as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-changed-files
+          path: changed_files/
+  deploy:
+    runs-on: self-hosted
+    needs: [build]
+    steps:
+    - name: Download build artifact
+      uses: actions/download-artifact@v4
+      with:
+        path: C:\AzureDevops\DeploymentTest
