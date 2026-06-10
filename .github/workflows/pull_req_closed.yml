@@ -21,7 +21,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT }}
         run: |
-          cd repo
+          #cd repo
           gh pr view 2 \
             --repo AadhityaKumar/Tasks_Aadhitya_Kumar \
             --json files \
@@ -31,7 +31,7 @@ jobs:
           
       - run: |
           mkdir -p changed_files
-          cd repo
+          #cd repo
           while read file; do
             mkdir -p "../changed_files/$(dirname "$file")"
 
