@@ -22,7 +22,7 @@ jobs:
           GH_TOKEN: ${{ secrets.PAT }}
         run: |
           cd repo
-          gh pr view 1 \
+          gh pr view 2 \
             --repo AadhityaKumar/Tasks_Aadhitya_Kumar \
             --json files \
             --jq '.files[].path' > changed_files.txt
