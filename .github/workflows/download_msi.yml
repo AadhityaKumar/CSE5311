@@ -8,9 +8,10 @@ jobs:
     steps:
       - name: Download from Private Repo
         run: |
-          curl -L -H "Authorization: token ${{ secrets.SENTHIL_PAT }}" \
-            -o SHP_IFPResponse_Setup.msi \
-            https://github.com/sentara-health/shp-834_IB_POST_ADDIN/raw/refs/heads/master/Compiled%20Objects%20for%20Deployment/SHP_IFPResponse_Setup.msi
+          curl -H "Authorization: token ${{ secrets.SENTHIL_PAT }}" \
+               -L https://github.com/sentara-health/shp-834_IB_POST_ADDIN/raw/refs/heads/master/Compiled%20Objects%20for%20Deployment/SHP_IFPResponse_Setup.msi \
+               -o ./downloaded-files/SHP_IFPResponse_Setup.msi
+            
       - name: Upload msi as artifact
         uses: actions/upload-artifact@v4
         with:
