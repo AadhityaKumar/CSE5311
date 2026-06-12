@@ -9,15 +9,13 @@ jobs:
       - name: Create local directory
         run: mkdir -p ./downloaded-files
         
-      - name: Download from Private Repo
+      - name: Download file using GitHub CLI
         env:
-          GITHUB_TOKEN: dict=${{ secrets.SENTHIL_PAT }}
+          GH_TOKEN: ${{ secrets.SENTHIL_PAT }}
         run: |
-          $jsonString = '{"Authorization": "token ${{ secrets.SENTHIL_PAT }}", "Content-Type": "application/json"}'
-          $headers = $jsonString | ConvertFrom-Json -AsHashTable
-          curl -H $headers \
-               -L https://github.com/sentara-health/shp-834_IB_POST_ADDIN/raw/refs/heads/master/Compiled%20Objects%20for%20Deployment/SHP_IFPResponse_Setup.msi \
-               -o ./downloaded-files/SHP_IFPResponse_Setup.msi
+          gh api repos/sentara-health/837_IB_POST_ADDIN/VPHP_837ImportPostProcess_setup/Debug/VPHP_837ImportPostProcess_setup.msi \
+            -H "Accept: application/vnd.github.v3.raw" \
+            --field ref=master > downloaded-files/VPHP_837ImportPostProcess_setup.msi
             
       - name: Upload msi as artifact
         uses: actions/upload-artifact@v4
