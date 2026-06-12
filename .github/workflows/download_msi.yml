@@ -6,9 +6,14 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
+      - name: Create local directory
+        run: mkdir -p ./downloaded-files
+        
       - name: Download from Private Repo
+        env:
+          GITHUB_TOKEN: ${{ secrets.SENTHIL_PAT }}
         run: |
-          curl -H "Authorization: token ${{ secrets.SENTHIL_PAT }}" \
+          curl -H "Authorization: token $GITHUB_TOKEN" \
                -L https://github.com/sentara-health/shp-834_IB_POST_ADDIN/raw/refs/heads/master/Compiled%20Objects%20for%20Deployment/SHP_IFPResponse_Setup.msi \
                -o ./downloaded-files/SHP_IFPResponse_Setup.msi
             
