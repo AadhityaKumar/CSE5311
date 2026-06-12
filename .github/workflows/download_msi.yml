@@ -9,19 +9,21 @@ jobs:
       - name: Create local directory
         run: mkdir -p ./downloaded-files
         
-      - name: Download file using GitHub CLI
+      - name: Download file from private repo
         env:
-          GH_TOKEN: ${{ secrets.SENTHIL_PAT }}
+          MY_PAT: ${{ secrets.SENTHIL_PAT }}
         run: |
-          gh api repos/sentara-health/837_IB_POST_ADDIN/Compiled Objects for Deployment/VPHP.DMAS.HIPAA5010834I.Post.Setup.msi \
+          curl -sL \
+            -H "Authorization: Bearer $MY_PAT" \
             -H "Accept: application/vnd.github.v3.raw" \
-            --field ref=c5770a6 > downloaded-files/VPHP.DMAS.HIPAA5010834I.Post.Setup.msi
+            https://github.com/sentara-health/837_IB_POST_ADDIN/raw/refs/heads/master/Deployment%20Artifacts/VPHP_837ImportPostProcess_setup.msi \
+            -o VPHP_837ImportPostProcess_setup.msi
             
       - name: Upload msi as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: VPHP.DMAS.HIPAA5010834I.Post.Setup.msi
-          path: ./downloaded-files/VPHP.DMAS.HIPAA5010834I.Post.Setup.msi
+          name: VPHP_837ImportPostProcess_setup.msi
+          path: ./downloaded-files/VPHP_837ImportPostProcess_setup.msi
   deploy:
       runs-on: self-hosted
       needs: [build]
