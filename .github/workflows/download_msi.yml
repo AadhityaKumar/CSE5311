@@ -6,8 +6,8 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - name: Create local directory
-        run: mkdir -p ./downloaded-files
+#      - name: Create local directory
+#        run: mkdir -p ./downloaded-files
         
       - name: Download from Private Repo
         env:
