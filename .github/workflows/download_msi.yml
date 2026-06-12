@@ -4,7 +4,7 @@ on:
   workflow_dispatch
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Create local directory
         run: mkdir -p ./downloaded-files
