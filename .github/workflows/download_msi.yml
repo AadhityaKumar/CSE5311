@@ -13,15 +13,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.SENTHIL_PAT }}
         run: |
-          gh api repos/sentara-health/837_IB_POST_ADDIN/VPHP_837ImportPostProcess_setup/Debug/VPHP_837ImportPostProcess_setup.msi \
+          gh api repos/sentara-health/837_IB_POST_ADDIN/Compiled Objects for Deployment/VPHP.DMAS.HIPAA5010834I.Post.Setup.msi \
             -H "Accept: application/vnd.github.v3.raw" \
-            --field ref=master > downloaded-files/VPHP_837ImportPostProcess_setup.msi
+            --field ref=c5770a6 > downloaded-files/VPHP.DMAS.HIPAA5010834I.Post.Setup.msi
             
       - name: Upload msi as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: SHP_IFPResponse_Setup.msi
-          path: ./downloaded-files/SHP_IFPResponse_Setup.msi
+          name: VPHP.DMAS.HIPAA5010834I.Post.Setup.msi
+          path: ./downloaded-files/VPHP.DMAS.HIPAA5010834I.Post.Setup.msi
   deploy:
       runs-on: self-hosted
       needs: [build]
